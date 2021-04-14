@@ -1,0 +1,80 @@
+<vex-page-layout>
+
+    <vex-secondary-toolbar current="{{('Professors')}}">
+    </vex-secondary-toolbar>
+
+<vex-page-layout-content>
+        <mat-card>
+            <mat-card-content>
+                <button  [routerLink]="['./add']" mat-raised-button
+                > ADD
+                </button>
+                <div class="table-responsive mat-elevation-z8" fxLayout="column" fxLayoutAlign="space-between">
+
+                    <table class="w-full" mat-table #table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="rowNumber">
+                            <mat-header-cell class="cell-center-align" *matHeaderCellDef>{{ 'Row no.' }}
+                            </mat-header-cell>
+                            <mat-cell class="cell-center-align" *matCellDef="let professor">
+                                {{ dataSource.filteredData.indexOf(professor) + 1 }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>
+                                {{'Name' }}</mat-header-cell>
+                            <mat-cell *matCellDef="let professor">
+                                {{professor.name}}
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="lastName">
+                            <mat-header-cell class="cell-center-align" *matHeaderCellDef mat-sort-header>
+                                {{'Last name' }}</mat-header-cell>
+                            <mat-cell class="cell-center-align" *matCellDef="let professor">
+                                {{ professor.lastName }}
+                            </mat-cell>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="address">
+                            <mat-header-cell class="cell-center-align" *matHeaderCellDef mat-sort-header>
+                                {{ 'Address' }}</mat-header-cell>
+                            <mat-cell class="cell-center-align" *matCellDef="let professor">
+                                {{ professor.address }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions" >
+                            <mat-header-cell class="cell-center-align" fxLayoutAlign="center center" *matHeaderCellDef>
+                                {{'Actions'}}
+                            </mat-header-cell>
+                            <mat-cell class="cell-center-align" *matCellDef="let professor">
+                                <button mat-raised-button [routerLink]="['./view',professor.professorID]" fxFlex=30>
+                                    <span class="material-icons">
+                                        View
+                                    </span>
+                                </button>
+                                <button mat-raised-button [routerLink]="['./edit',professor.professorID]" fxFlex=30>
+                                    <span class="material-icons">
+                                        Edit
+                                    </span>
+                                </button>
+                                <button mat-raised-button (click)="deleteProfessor(professor.professorID)" fxFlex=30>
+                                    <span class="material-icons">
+                                        Delete
+                                    </span>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+                    </table>
+                    <mat-paginator [pageSizeOptions]='[10,25]' showFirstLastButtons></mat-paginator>
+                </div>
+            </mat-card-content>
+        </mat-card>
+</vex-page-layout-content>
+</vex-page-layout>

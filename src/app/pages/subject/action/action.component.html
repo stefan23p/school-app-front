@@ -1,0 +1,39 @@
+<vex-page-layout>
+    <vex-secondary-toolbar current="{{(title)}}">
+    </vex-secondary-toolbar>
+    <vex-page-layout-content>
+            <mat-card>
+                <mat-card-content>
+                    <div class="form" fxFlex='100' fxLayout='column'>
+                        <form class="example-form" [formGroup]='form' 
+                         fxLayout='column' fxFlex='100'>
+                            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+                              <mat-label>Name</mat-label>
+                              <input matInput formControlName='name' >
+                            </mat-form-field>
+              
+                            <mat-form-field class="example-full-width"  fxLayout='row' fxFlex='50'>
+                              <mat-label>Semester</mat-label>
+                              <input matInput formControlName='semester'>
+                            </mat-form-field>
+              
+                            <!-- <mat-form-field class="example-full-width"  fxLayout='row' fxFlex='50'>
+                              <mat-label>Address</mat-label>
+                              <input matInput formControlName='address'>
+                            </mat-form-field> -->
+                    
+                      </form>
+                      <div fxLayout='row' fxLayoutAlign="space-between center">
+                        <button class="add-button" [disabled]="isDisabled" (click)="onSubmit()" fxLayoutAlign="center center"
+                        mat-raised-button fxLayout= 'column' fxFlex='10'>Submit</button>
+                   
+                      <button class="add-button" mat-raised-button fxLayout= 'column' fxFlex='10' fxLayoutAlign="center center"
+                        [routerLink]="['/subject']">Back</button>
+                      </div>
+                    </div>
+
+                    
+                </mat-card-content>
+            </mat-card>
+    </vex-page-layout-content>
+</vex-page-layout>

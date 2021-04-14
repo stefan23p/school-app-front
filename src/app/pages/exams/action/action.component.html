@@ -1,0 +1,66 @@
+<vex-page-layout>
+  <vex-secondary-toolbar current="{{(title)}}">
+  </vex-secondary-toolbar>
+  <vex-page-layout-content>
+    <mat-card>
+      <mat-card-content>
+        <div class="form" fxFlex='100' fxLayout='column'>
+          <form class="example-form" [formGroup]='form' fxLayout='column' fxFlex='50'>
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Date</mat-label>
+              <input matInput formControlName='date'>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Criteria</mat-label>
+              <input matInput formControlName='criteria'>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Number of tasks</mat-label>
+              <input matInput formControlName='numberOfTasks'>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Type</mat-label>
+              <input matInput formControlName='type'>
+            </mat-form-field>
+
+
+          </form>
+
+        </div>
+        <div class="assignProfessors" fxFlex='50'>
+          <h4>Assign professor:</h4>
+          <div *ngFor="let professor of professors; let j = index">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle value="bold" (click)="assignProfessor(professor.professorID )">
+                {{professor.name}} {{professor.lastName}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+
+          </div>
+        </div>
+
+        <div class="assignSubjects" fxFlex='50'>
+          <h4>Assign subject:</h4>
+          <div *ngFor="let subject of subjects; let i = index">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle value="bold" (click)="assignSubject(subject.subjectID)">{{subject.name}}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+       
+        <div fxLayout='row' fxLayoutAlign="space-between center">
+          <button class="add-button" (click)="onSubmit()" fxLayoutAlign="center center" mat-raised-button
+            fxLayout='column' fxFlex='10'>Submit</button>
+
+          <button class="add-button" mat-raised-button fxLayout='column' fxFlex='10' fxLayoutAlign="center center"
+            [routerLink]="['/exams']">Back</button>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </vex-page-layout-content>
+</vex-page-layout>

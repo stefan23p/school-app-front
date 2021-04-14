@@ -1,0 +1,50 @@
+<vex-page-layout>
+  <vex-secondary-toolbar current="{{(title)}}">
+  </vex-secondary-toolbar>
+  <vex-page-layout-content>
+    <mat-card>
+      <mat-card-content>
+        <div class="form" fxFlex='100' fxLayout='column'>
+          <form class="example-form" [formGroup]='form' *ngIf="professor" fxLayout='column' fxFlex='50'>
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Name</mat-label>
+              <input matInput formControlName='name'>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>LastName</mat-label>
+              <input matInput formControlName='lastName'>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
+              <mat-label>Address</mat-label>
+              <input matInput formControlName='address'>
+            </mat-form-field>
+
+          </form>
+          
+         
+          </div> 
+          <div class="subjects" fxFlex='50' fxLayout='column' >
+            <h4>Professors subjects:</h4>
+            <div *ngFor="let subject of professorSubjects">{{subject.name}}</div>
+          </div>
+          <div class="subjects" fxFlex='50' fxLayout='column' *ngIf="availableSubj">
+            <h4>Available subjects:</h4>
+            <button mat-raised-button (click)= addSubject(subject) *ngFor="let subject of availableSubjects">{{subject.name}}</button>
+          </div>
+          
+          <div class="buttons" fxFlex='100' fxLayout='row'>
+            <div fxLayout='row' fxLayoutAlign="space-between center">
+              <button mat-raised-button class="add-button" [disabled]="isDisabled" (click)="onSubmit()" fxLayoutAlign="center center"
+                mat-raised-button color="primary" fxLayout='column' fxFlex='10'>Submit</button>
+  
+              <button  class="add-button" mat-raised-button color="primary" fxLayout='column' fxFlex='10'
+                fxLayoutAlign="center center" [routerLink]="['/professor']">Back</button>
+            </div>
+          </div>
+
+      </mat-card-content>
+    </mat-card>
+  </vex-page-layout-content>
+</vex-page-layout>
