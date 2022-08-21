@@ -13,18 +13,14 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PageLayoutModule } from 'src/@vex/components/page-layout/page-layout.module';
 import { SecondaryToolbarModule } from 'src/@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ProfessorComponent } from './professor.component';
-import { ProfessorRoutingModule } from './professor-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreadcrumbsModule } from 'src/@vex/components/breadcrumbs/breadcrumbs.module';
-import { ActionComponent } from './action/action.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-
+import { TableComponent } from './table.component';
 @NgModule({
-  declarations:[ProfessorComponent,ActionComponent],
+  declarations:[TableComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -41,13 +37,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
     PageLayoutModule,
     SecondaryToolbarModule,
     MatProgressSpinnerModule,
-    ProfessorRoutingModule,
     MatToolbarModule,
     MatInputModule,
     MatListModule,
     MatIconModule,
     BreadcrumbsModule,
-    MatExpansionModule
-  ]
+  ],
+  exports:[TableComponent]
 })
-export class ProfessorModule { }
+export class TableComponentModule { }

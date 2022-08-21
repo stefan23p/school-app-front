@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ComponentTypeEnum } from 'src/app/common/enums/component-type.enum';
 import { Professor } from 'src/app/models/professor';
 import { ProfessorSubject } from 'src/app/models/professor-subject';
 import { Subjects } from 'src/app/models/subject';
@@ -16,34 +17,34 @@ import { SubjectService } from 'src/app/services/subject.service';
   styleUrls: ['./action.component.scss']
 })
 export class ActionComponent implements OnInit  {
+  title:string;
+  professor:Professor = new Professor();
+  newSubjects = new Array<ProfessorSubject>();
+  availableSbjs= new Array<ProfessorSubject>();
+  availableSubjects = new Array<Subjects>();
+  destroy$ = new Subject();
+  showSubjects = true;
+  professorSubjects = new Array<Subjects>();
+  id;
+  form 
+  componentType;
+  // componentTypeEnum = ComponentTypeEnum;
+  availableSubj = false;       
+  isDisabled =false;
+  isAdd = false;
+
 
   constructor(private professorService: ProfessorService, private _activateRoute: ActivatedRoute,
               private _fb: FormBuilder, private subjectService:SubjectService,
               private toast:ToastrService
               ) { }
     
-    title:string;
-    professor:Professor = new Professor();
-    newSubjects = new Array<ProfessorSubject>();
-    availableSbjs= new Array<ProfessorSubject>();
-    availableSubjects = new Array<Subjects>();
-    destroy$ = new Subject();
-    showSubjects = true;
-    professorSubjects = new Array<Subjects>();
-    id;
-    form = this._fb.group({
-      name: ['', Validators.required],
-      lastName: ['', Validators.required],
-      address: ['', Validators.required]
-       });
-
-    availableSubj = false;       
-    isDisabled =false;
 
     ngOnInit(): void {
-      
+      this.configureForm();
       if(this._activateRoute.snapshot.data['action'] == "edit")
       {
+        this.componentType = ComponentTypeEnum.Edit;
         this.id = this._activateRoute.snapshot.paramMap.get('id') ;
         this.title = 'Edit professor';
         this.getData(this.id);
@@ -51,6 +52,7 @@ export class ActionComponent implements OnInit  {
       }
       else if(this._activateRoute.snapshot.data['action'] == "view")
       {
+        this.componentType = ComponentTypeEnum.View;
         this.id = this._activateRoute.snapshot.paramMap.get('id');
           this.title = 'View professor';
           this.isDisabled =true;
@@ -59,14 +61,28 @@ export class ActionComponent implements OnInit  {
       }
       else if(this._activateRoute.snapshot.data['action'] == "add")
       {
+        this.componentType = ComponentTypeEnum.Add;
         this.availableSubj = true;
         this.title = 'Add professor';
         this.getSubjects();
+        this.isAdd = true;
+
       }
       
     }
 
-  onSubmit(){
+  private configureForm(){
+    this.form =  this._fb.group({
+      name: ['', Validators.required],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      email: ['', Validators.required],
+      consultations: ['', Validators.required],
+      officeNumber: ['', Validators.required]
+       });
+  }
+
+  public onSubmit(){
         let professor: Professor = {
             professorID: this.id,
             name: this.form.get('name').value,
@@ -92,7 +108,7 @@ export class ActionComponent implements OnInit  {
                       }
   }
 
-  getData(id:any){
+ private getData(id:any){
     this.professorService.getProfessorById(id)
             .pipe(
               takeUntil(this.destroy$)
@@ -106,13 +122,16 @@ export class ActionComponent implements OnInit  {
                           {
                             name: this.professor.name,
                             lastName: this.professor.lastName,
-                            address: this.professor.address
+                            address: this.professor.address,
+                            email: this.professor.email,
+                            consultations: this.professor.consultations,
+                            officeNumber: this.professor.officeNumber
                           }
                         )
                     });
     }
 
-    getSubjects(){
+   private getSubjects(){
       this.subjectService.subjects
       .pipe(
         takeUntil(this.destroy$)
@@ -122,12 +141,9 @@ export class ActionComponent implements OnInit  {
               }
             )
       this.subjectService.getSubjects();
-
             }
 
-     
-
-    addSubject(subject: Subjects){
+   public addSubject(subject: Subjects){
        if(this.professorSubjects.includes(subject)){
           return;
        }
@@ -146,6 +162,11 @@ export class ActionComponent implements OnInit  {
        }
     }
 
+    public removeSubject(subject: Subjects){
+      const index = this.professorSubjects.indexOf(subject);
+      this.professorSubjects.splice(index, 1);
+      this.availableSubjects.push(subject);
+    }
     
 
     getProfessorsSubjects(data:ProfessorSubject[]){

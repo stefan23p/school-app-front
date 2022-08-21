@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { Interceptor } from './interceptor/http-interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       positionClass:'toast-top-right'
     }),
+    MatIconModule,
 
     // Vex
     VexModule,

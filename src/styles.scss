@@ -28,3 +28,14 @@
   // --color-warn: yellow;
   // --color-warn-contrast: black;
 }
+
+.cancel-button{
+  color: red;
+  margin: auto;
+  cursor: pointer;
+  position: absolute;
+}
+
+.form-actions-buttons{
+  margin-top: 15px;
+}

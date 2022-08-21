@@ -3,46 +3,126 @@
   </vex-secondary-toolbar>
   <vex-page-layout-content>
     <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+          <mat-icon class="avatar"> person_pin</mat-icon>
+        </div>
+        <div class="card-title" *ngIf='componentType==="add"'>
+          <mat-card-title>Add professor</mat-card-title>
+          <mat-card-subtitle>Add professor</mat-card-subtitle>
+        </div>
+        <div class="card-title" *ngIf='componentType==="edit"'>
+          <mat-card-title>{{ professor?.name}} {{professor.lastName }}</mat-card-title>
+          <mat-card-subtitle>{{ professor?.email }}</mat-card-subtitle>
+        </div>
+        <div class="card-title" *ngIf='componentType==="view"'>
+          <mat-card-title>{{ professor?.name}} {{professor.lastName }}</mat-card-title>
+          <mat-card-subtitle>{{ professor?.email }}</mat-card-subtitle>
+        </div>
+        <div class="card-title" *ngIf='isAdd'>
+          <mat-card-title>Please add professor</mat-card-title>
+          <!-- <mat-card-subtitle>Add professor</mat-card-subtitle> -->
+        </div>
+      </mat-card-header>
       <mat-card-content>
-        <div class="form" fxFlex='100' fxLayout='column'>
-          <form class="example-form" [formGroup]='form' *ngIf="professor" fxLayout='column' fxFlex='50'>
-            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
-              <mat-label>Name</mat-label>
-              <input matInput formControlName='name'>
-            </mat-form-field>
+        <div fxLayout='column' fxFlex='100'>
+          <form class="form" [formGroup]='form' *ngIf="professor" fxLayout='column' fxFlex='100' >
+            <div fxLayout='row' fxFlex='100' fxLayoutGap="10px">
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>Name</mat-label>
+                <input matInput formControlName='name'>
+              </mat-form-field>
+  
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>LastName</mat-label>
+                <input matInput formControlName='lastName'>
+              </mat-form-field>
 
-            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
-              <mat-label>LastName</mat-label>
-              <input matInput formControlName='lastName'>
-            </mat-form-field>
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName='email'>
+              </mat-form-field>
+            </div>
 
-            <mat-form-field class="example-full-width" fxLayout='row' fxFlex='50'>
-              <mat-label>Address</mat-label>
-              <input matInput formControlName='address'>
-            </mat-form-field>
+            <div fxLayout='row' fxFlex='100' style="margin-top: 5px;">
+              <div fxLayout='row' fxFlex='100' fxLayoutGap="30px">
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>Address</mat-label>
+                <input matInput formControlName='address'>
+              </mat-form-field>
 
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>Consultations</mat-label>
+                <input matInput formControlName='consultations'>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width" fxLayout='column' fxFlex='30'>
+                <mat-label>Office number</mat-label>
+                <input matInput formControlName='officeNumber'>
+              </mat-form-field>
+              </div>
+            </div>
           </form>
           
          
-          </div> 
-          <div class="subjects" fxFlex='50' fxLayout='column' >
-            <h4>Professors subjects:</h4>
-            <div *ngFor="let subject of professorSubjects">{{subject.name}}</div>
-          </div>
-          <div class="subjects" fxFlex='50' fxLayout='column' *ngIf="availableSubj">
-            <h4>Available subjects:</h4>
-            <button mat-raised-button (click)= addSubject(subject) *ngFor="let subject of availableSubjects">{{subject.name}}</button>
+          <div class="subjects" fxFlex='100' fxLayout='row' fxLayoutGap="10px">
+            <mat-card class="professor-subjects" fxLayout='column' fxFlex='50'>
+              <h4>Professors subjects:</h4>
+              <ng-container *ngIf='!professorSubjects.length'>
+                <span> This professor does not have any subjects.</span>
+              </ng-container>
+              <ng-container *ngIf='professorSubjects.length'>
+                <mat-accordion>
+                  <mat-expansion-panel hideToggle *ngFor="let subject of professorSubjects">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        {{subject.name}}
+                      </mat-panel-title>
+                      <mat-panel-description>
+                        This is a summary of the content
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>This is the primary content of the panel.</p>
+                   <button class="delete-button" mat-raised-button color="primary"  (click)= removeSubject(subject)>
+                    <mat-icon>delete</mat-icon>
+                   </button>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </ng-container>
+            </mat-card>
+            <mat-card class="subjects" fxFlex='50' fxLayout='column' *ngIf="availableSubj">
+              <h4>Available subjects:</h4>
+              <mat-accordion>
+                <mat-expansion-panel hideToggle *ngFor="let subject of availableSubjects">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{subject.name}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Click to view details...
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>Click on subject name to add subject.</p>
+                   <button class="add-button" mat-raised-button color="primary"  (click)= addSubject(subject)>
+                    <mat-icon>add</mat-icon>
+                    </button>
+
+                  <button></button>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-card>
           </div>
           
-          <div class="buttons" fxFlex='100' fxLayout='row'>
+          <div class="form-actions-buttons" fxFlex='100' fxLayout='row'>
             <div fxLayout='row' fxLayoutAlign="space-between center">
               <button mat-raised-button class="add-button" [disabled]="isDisabled" (click)="onSubmit()" fxLayoutAlign="center center"
-                mat-raised-button color="primary" fxLayout='column' fxFlex='10'>Submit</button>
-  
+              mat-raised-button color="primary" fxLayout='column' fxFlex='10'>Submit</button>
+              
               <button  class="add-button" mat-raised-button color="primary" fxLayout='column' fxFlex='10'
-                fxLayoutAlign="center center" [routerLink]="['/professor']">Back</button>
+              fxLayoutAlign="center center" [routerLink]="['/professor']">Back</button>
             </div>
           </div>
+        </div> 
 
       </mat-card-content>
     </mat-card>

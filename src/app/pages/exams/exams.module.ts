@@ -21,6 +21,7 @@ import { BreadcrumbsModule } from 'src/@vex/components/breadcrumbs/breadcrumbs.m
 import { ExamsRoutingModule } from './exams-routing.module';
 import { ExamsComponent } from './exams.component';
 import { ActionComponent } from './action/action.component';
+import { TableComponentModule } from 'src/app/components/table-component/table/table.component.module';
 @NgModule({
   declarations:[ExamsComponent, ActionComponent],
   imports: [
@@ -45,6 +46,7 @@ import { ActionComponent } from './action/action.component';
     MatListModule,
     MatIconModule,
     BreadcrumbsModule,
+    TableComponentModule
   ]
 })
 export class ExamsModule { }

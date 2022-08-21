@@ -16,6 +16,8 @@
   mat-footer-row,
   th.mat-header-cell,
   td.mat-cell,
+  td,
+  th,
   td.mat-footer-cell {
     border-bottom-color: var(--foreground-divider);
   }
@@ -46,6 +48,12 @@
 
 .mat-table .mat-cell,
 .mat-table .mat-header-cell {
+  box-sizing: content-box;
+  padding-left: var(--padding-12);
+  padding-right: var(--padding-12);
+  white-space: nowrap;
+}
+th, td{
   box-sizing: content-box;
   padding-left: var(--padding-12);
   padding-right: var(--padding-12);

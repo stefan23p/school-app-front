@@ -10,10 +10,13 @@
             ADD
         </button>
         <mat-card-content>
+
+            <vex-table [tableData]='columnData'>
+            </vex-table>
             <!-- <button  [routerLink]="['./add']" >
                 ADD
             </button> -->
-            <div class="table-responsive mat-elevation-z8" fxLayout="column" fxLayoutAlign="space-between">
+            <!-- <div class="table-responsive mat-elevation-z8" fxLayout="column" fxLayoutAlign="space-between">
                 
                 <table class="w-full" mat-table #table [dataSource]="dataSource" matSort>
                     <ng-container matColumnDef="rowNumber">
@@ -83,8 +86,8 @@
                         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                         <mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
                     </table>
-                    <mat-paginator [pageSizeOptions]='[10,25]' showFirstLastButtons></mat-paginator>
-                </div>
+                    <mat-paginator [pageSizeOptions]='[10,25]' showFirstLastButtons></mat-paginator> -->
+                <!-- </div> -->
             </mat-card-content>
         </mat-card>
 </vex-page-layout-content>

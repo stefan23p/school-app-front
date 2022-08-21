@@ -1,0 +1,33 @@
+    <div class="table-responsive mat-elevation-z8" fxLayout="column" fxLayoutAlign="space-between" *ngIf='tableData'>
+    <div class="filter" fxLayout="column" fxFlex="100">
+
+            <mat-form-field class="filter" fxLayout='row' fxFlex='100'>
+                <mat-label>Filter...</mat-label>
+                <input matInput type="search" [formControl]='formControl'>
+              </mat-form-field>
+
+    </div>
+    <table class="w-full table" #table mat-table fxLayout="column" [dataSource]="dataSource">
+        <ng-container [matColumnDef]="column.name" *ngFor="let column of columns">
+          <th class="cell-center-align" mat-header-cell  *matHeaderCellDef> {{column.title}} </th>
+          <td class="cell-center-align" mat-cell *matCellDef="let columnData">
+              <span *ngIf="column.name==='rowNo'">  {{ dataSource.filteredData.indexOf(columnData) + 1 }} </span> 
+              <span *ngIf="!['rowNo', 'actions'].includes(column)">
+                  {{columnData[column.name]}} 
+              </span>
+              <span *ngIf="column.name==='actions'">
+                  <span *ngFor="let action of actions">
+                      <button  (click)="selectAction(columnData, action.type)" fxFlex=30 >
+                          <mat-icon>{{action.icon}}</mat-icon>
+                      </button>
+                  </span>
+
+                </span>
+            
+            </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+      </table>
+    </div>
